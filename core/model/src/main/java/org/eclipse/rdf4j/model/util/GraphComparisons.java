@@ -34,6 +34,7 @@ import org.eclipse.rdf4j.model.Literal;
 import org.eclipse.rdf4j.model.Model;
 import org.eclipse.rdf4j.model.Resource;
 import org.eclipse.rdf4j.model.Statement;
+import org.eclipse.rdf4j.model.Triple;
 import org.eclipse.rdf4j.model.Value;
 import org.eclipse.rdf4j.model.impl.DynamicModelFactory;
 import org.slf4j.Logger;
@@ -213,6 +214,18 @@ class GraphComparisons {
 			if (st.getContext() != null && st.getContext().isBNode()) {
 				blankNodes.add((BNode) st.getContext());
 			}
+
+			Triple t = Values.triple(st);
+			while (t.getObject().isTriple()) {
+				t = (Triple) t.getObject();
+
+				if (t.getSubject().isBNode()) {
+					blankNodes.add((BNode) t.getSubject());
+				}
+				if (t.getObject().isBNode()) {
+					blankNodes.add((BNode) t.getObject());
+				}
+			}
 		});
 		return blankNodes;
 	}
@@ -357,10 +370,39 @@ class GraphComparisons {
 						partitioning.setCurrentHashCode(b,
 								hashBag(c, partitioning.getCurrentHashCode(b)));
 					}
+
+					for (Statement st : m.getStatements(null, null, null)) {
+						if (st.getObject().isTriple()) {
+							hashBNodeInTripleTerms((Triple) st.getObject(), b, partitioning);
+						}
+					}
+
 				}
 			} while (!partitioning.isFullyDistinguished());
 		}
 		return partitioning;
+	}
+
+	private static void hashBNodeInTripleTerms(Triple t, BNode b, Partitioning partitioning) {
+		if (t.getSubject().equals(b)) {
+			HashCode c = hashTuple(
+					partitioning.getPreviousHashCode(t.getObject()),
+					partitioning.getPreviousHashCode(t.getPredicate()),
+					outgoing);
+			partitioning.setCurrentHashCode(b,
+					hashBag(c, partitioning.getCurrentHashCode(b)));
+		}
+		if (t.getObject().equals(b)) {
+			HashCode c = hashTuple(
+					partitioning.getPreviousHashCode(t.getSubject()),
+					partitioning.getPreviousHashCode(t.getPredicate()),
+					incoming);
+			partitioning.setCurrentHashCode(b,
+					hashBag(c, partitioning.getCurrentHashCode(b)));
+		}
+		if (t.getObject().isTriple()) {
+			hashBNodeInTripleTerms((Triple) t.getObject(), b, partitioning);
+		}
 	}
 
 	protected static HashCode hashTuple(HashCode... hashCodes) {
@@ -429,6 +471,9 @@ class GraphComparisons {
 			}
 			if (value.isLiteral()) {
 				return getStaticLiteralHashCode((Literal) value);
+			}
+			if (value.isTriple()) {
+				return hashTuple(getPreviousHashCode(((Triple) value).getSubject()), getPreviousHashCode(((Triple) value).getPredicate()), getPreviousHashCode(((Triple) value).getObject()));
 			}
 			return staticValueMapping.computeIfAbsent(value,
 					v -> hashFunction.hashString(v.stringValue(), StandardCharsets.UTF_8));

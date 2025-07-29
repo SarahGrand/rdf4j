@@ -108,20 +108,19 @@ public class RDFParserHelper {
 			boolean recognisedLanguage = false;
 
 			// Split workingLang into language tag and base direction so both can be separately verified
-			String languageTag, baseDirection;
-			int index = lang.indexOf("--");
+			final String languageTag;
+			final int index = lang.indexOf(Literal.BASE_DIR_SEPARATOR);
 			if (index != -1) {
 				languageTag = lang.substring(0, index);
-				baseDirection = lang.substring(index);
+				final String baseDirection = lang.substring(index);
 
 				if (parserConfig.get(BasicParserSettings.VERIFY_BASE_TEXT_DIRECTION)
-						&& !(baseDirection.equals("--ltr") || baseDirection.equals("--rtl"))) {
+						&& !(baseDirection.equals(Literal.LTR_SUFFIX) || baseDirection.equals(Literal.RTL_SUFFIX))) {
 					reportError("'" + baseDirection + "' is not a valid base direction ", lineNo, columnNo,
 							BasicParserSettings.VERIFY_BASE_TEXT_DIRECTION, parserConfig, errListener);
 				}
 			} else {
 				languageTag = lang;
-				baseDirection = "";
 			}
 
 			for (LanguageHandler nextHandler : parserConfig.get(BasicParserSettings.LANGUAGE_HANDLERS)) {

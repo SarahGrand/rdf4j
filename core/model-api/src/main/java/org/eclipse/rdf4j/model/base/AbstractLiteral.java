@@ -274,7 +274,7 @@ public abstract class AbstractLiteral implements Literal {
 		TaggedLiteral(String label, String language) {
 			this.label = label;
 			this.language = language;
-			hasBaseDirection = language.endsWith("--ltr") || language.endsWith("--rtl");
+			hasBaseDirection = language.endsWith(Literal.LTR_SUFFIX) || language.endsWith(Literal.RTL_SUFFIX);
 		}
 
 		@Override

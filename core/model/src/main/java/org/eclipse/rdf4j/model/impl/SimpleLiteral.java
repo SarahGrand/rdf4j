@@ -165,7 +165,7 @@ public class SimpleLiteral extends AbstractLiteral {
 		this.language = language;
 		optionalLanguageCache = Optional.of(language);
 
-		if (language.endsWith("--ltr") || language.endsWith("--rtl")) {
+		if (language.endsWith(Literal.LTR_SUFFIX) || language.endsWith(Literal.RTL_SUFFIX)) {
 			setDatatype(CoreDatatype.RDF.DIRLANGSTRING);
 		} else {
 			setDatatype(CoreDatatype.RDF.LANGSTRING);

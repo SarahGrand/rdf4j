@@ -83,8 +83,8 @@ public interface LanguageHandler {
 	 * @throws LiteralUtilException If the language tag was not recognized or verified, or the literal value could not
 	 *                              be normalized due to an error.
 	 */
-	Literal normalizeLanguage(String literalValue, String languageTag,
-			ValueFactory valueFactory)
+	Literal normalizeLanguage(final String literalValue, final String languageTag,
+			final ValueFactory valueFactory)
 			throws LiteralUtilException;
 
 	/**

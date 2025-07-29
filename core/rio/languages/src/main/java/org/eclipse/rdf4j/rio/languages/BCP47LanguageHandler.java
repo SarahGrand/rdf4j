@@ -63,7 +63,8 @@ public class BCP47LanguageHandler implements LanguageHandler {
 	}
 
 	@Override
-	public Literal normalizeLanguage(String literalValue, String languageTag, ValueFactory valueFactory)
+	public Literal normalizeLanguage(final String literalValue, final String languageTag,
+			final ValueFactory valueFactory)
 			throws LiteralUtilException {
 		Objects.requireNonNull(languageTag, "Language tag cannot be null");
 		Objects.requireNonNull(literalValue, "Literal value cannot be null");

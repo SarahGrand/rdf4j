@@ -41,6 +41,10 @@ import org.eclipse.rdf4j.model.base.CoreDatatype;
  * @see <a href="https://www.w3.org/TR/xmlschema11-2">XML Schema Definition Language (XSD) 1.1 Part 2: Datatypes</a>
  */
 public interface Literal extends Value {
+	String LTR_SUFFIX = "--ltr";
+	String RTL_SUFFIX = "--rtl";
+	String BASE_DIR_SEPARATOR = "--";
+	int BASE_DIR_LEN = LTR_SUFFIX.length();
 
 	@Override
 	default boolean isLiteral() {

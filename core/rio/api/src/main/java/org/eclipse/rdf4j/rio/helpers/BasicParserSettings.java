@@ -117,7 +117,7 @@ public class BasicParserSettings {
 	 * Can be overridden by setting system property {@code org.eclipse.rdf4j.rio.normalize_language_tags}.
 	 */
 	public static final BooleanRioSetting NORMALIZE_LANGUAGE_TAGS = new BooleanRioSetting(
-			"org.eclipse.rdf4j.rio.normalize_language_tags", "Normalize recognised language tags", Boolean.FALSE);
+			"org.eclipse.rdf4j.rio.normalize_language_tags", "Normalize recognised language tags", Boolean.TRUE);
 
 	/**
 	 * Boolean setting for parser to determine whether base direction syntax should be verified.

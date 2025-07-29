@@ -1012,265 +1012,121 @@ public class TurtleParserTest extends AbstractParserTest {
 		}
 	}
 
-//	/*
-//	 * https://w3c.github.io/rdf-tests/rdf/rdf12/rdf-turtle/syntax/turtle12-syntax-inside-01.ttl
-//	 */
-//	@Test
-//	public void testReifiedTripleInBlankNodePropertyList() throws IOException {
-//		String data = "PREFIX : <http://example/>\n" +
-//				"\n" +
-//				":s :p :o .\n" +
-//				"[ :q <<:s :p :o>> ] :b :c .";
-//		try {
-//			Model model = new LinkedHashModel();
-//			statementCollector = new StatementCollector(model);
-//			parser.setRDFHandler(statementCollector);
-//			parser.parse(new StringReader(data));
-//
-//			assertThat(errorCollector.getErrors()).isEmpty();
-//
-//			assertThat(model).hasSize(4);
-//
-//			assertTrue(model.contains(simpleSPOStatement));
-//			Model reifyingTriples = model.filter(null, RDF.REIFIES, simpleSPOTriple);
-//			assertThat(reifyingTriples).hasSize(1);
-//			Resource reifier = Models.subject(reifyingTriples).get();
-//			assertInstanceOf(BNode.class, reifier);
-//			assertTrue(model.contains(null, vf.createIRI("http://example/q"), reifier));
-//			assertTrue(model.contains(null, vf.createIRI("http://example/b"), vf.createIRI("http://example/c")));
-//		} catch (RDFParseException e) {
-//			fail("parse error on correct data: " + e.getMessage());
-//		}
-//	}
-	//
-//	/*
-//	 * https://w3c.github.io/rdf-tests/rdf/rdf12/rdf-turtle/syntax/nt-ttl12-nested-1.ttl
-//	 */
-//	@Test
-//	public void testNestedTripleTerms() throws IOException {
-//		String data = "<http://example/s> <http://example/p> <http://example/o> .\n" +
-//				"<http://example/a> <http://www.w3.org/1999/02/22-rdf-syntax-ns#reifies> <<( <http://example/s1> <http://example/p1> <http://example/o1> )>> .\n" +
-//				"<http://example/r> <http://www.w3.org/1999/02/22-rdf-syntax-ns#reifies> <<( <http://example/23> <http://www.w3.org/1999/02/22-rdf-syntax-ns#reifies> <<( <http://example/s3> <http://example/p3> <http://example/o3> )>> )>> .";
-//
-//		try {
-//			parser.parse(new StringReader(data));
-//
-//			assertThat(errorCollector.getErrors()).isEmpty();
-//
-//			Collection<Statement> stmts = statementCollector.getStatements();
-//
-//			assertThat(stmts).hasSize(3);
-//
-//			Iterator<Statement> iter = stmts.iterator();
-//			Statement stmt1 = iter.next(), stmt2 = iter.next(), stmt3 = iter.next();
-//
-//			assertEquals(stmt1, vf.createStatement(
-//					vf.createIRI("http://example/s"), vf.createIRI("http://example/p"), vf.createIRI("http://example/o")));
-//			assertEquals(stmt2, vf.createStatement(vf.createIRI("http://example/a"), RDF.REIFIES, vf.createTriple(
-//					vf.createIRI("http://example/s1"), vf.createIRI("http://example/p1"), vf.createIRI("http://example/o1"))));
-//			assertEquals(stmt3, vf.createStatement(vf.createIRI("http://example/r"), RDF.REIFIES,
-//					vf.createTriple(vf.createIRI("http://example/23"), RDF.REIFIES,
-//							vf.createTriple(vf.createIRI("http://example/s3"), vf.createIRI("http://example/p3"), vf.createIRI("http://example/o3")))));
-//		} catch (RDFParseException e) {
-//			fail("parse error on correct data: " + e.getMessage());
-//		}
-//	}
-//
-//	/*
-//	 * https://w3c.github.io/rdf-tests/rdf/rdf12/rdf-turtle/syntax/nt-ttl12-nested-1.ttl
-//	 */
-//	@Test
-//	public void testNestedTripleTerms() throws IOException {
-//		String data = "<http://example/s> <http://example/p> <http://example/o> .\n" +
-//				"<http://example/a> <http://www.w3.org/1999/02/22-rdf-syntax-ns#reifies> <<( <http://example/s1> <http://example/p1> <http://example/o1> )>> .\n" +
-//				"<http://example/r> <http://www.w3.org/1999/02/22-rdf-syntax-ns#reifies> <<( <http://example/23> <http://www.w3.org/1999/02/22-rdf-syntax-ns#reifies> <<( <http://example/s3> <http://example/p3> <http://example/o3> )>> )>> .";
-//
-//		try {
-//			parser.parse(new StringReader(data));
-//
-//			assertThat(errorCollector.getErrors()).isEmpty();
-//
-//			Collection<Statement> stmts = statementCollector.getStatements();
-//
-//			assertThat(stmts).hasSize(3);
-//
-//			Iterator<Statement> iter = stmts.iterator();
-//			Statement stmt1 = iter.next(), stmt2 = iter.next(), stmt3 = iter.next();
-//
-//			assertEquals(stmt1, vf.createStatement(
-//					vf.createIRI("http://example/s"), vf.createIRI("http://example/p"), vf.createIRI("http://example/o")));
-//			assertEquals(stmt2, vf.createStatement(vf.createIRI("http://example/a"), RDF.REIFIES, vf.createTriple(
-//					vf.createIRI("http://example/s1"), vf.createIRI("http://example/p1"), vf.createIRI("http://example/o1"))));
-//			assertEquals(stmt3, vf.createStatement(vf.createIRI("http://example/r"), RDF.REIFIES,
-//					vf.createTriple(vf.createIRI("http://example/23"), RDF.REIFIES,
-//							vf.createTriple(vf.createIRI("http://example/s3"), vf.createIRI("http://example/p3"), vf.createIRI("http://example/o3")))));
-//		} catch (RDFParseException e) {
-//			fail("parse error on correct data: " + e.getMessage());
-//		}
-//	}
-//
-//	/*
-//	 * https://w3c.github.io/rdf-tests/rdf/rdf12/rdf-turtle/syntax/nt-ttl12-nested-1.ttl
-//	 */
-//	@Test
-//	public void testNestedTripleTerms() throws IOException {
-//		String data = "<http://example/s> <http://example/p> <http://example/o> .\n" +
-//				"<http://example/a> <http://www.w3.org/1999/02/22-rdf-syntax-ns#reifies> <<( <http://example/s1> <http://example/p1> <http://example/o1> )>> .\n" +
-//				"<http://example/r> <http://www.w3.org/1999/02/22-rdf-syntax-ns#reifies> <<( <http://example/23> <http://www.w3.org/1999/02/22-rdf-syntax-ns#reifies> <<( <http://example/s3> <http://example/p3> <http://example/o3> )>> )>> .";
-//
-//		try {
-//			parser.parse(new StringReader(data));
-//
-//			assertThat(errorCollector.getErrors()).isEmpty();
-//
-//			Collection<Statement> stmts = statementCollector.getStatements();
-//
-//			assertThat(stmts).hasSize(3);
-//
-//			Iterator<Statement> iter = stmts.iterator();
-//			Statement stmt1 = iter.next(), stmt2 = iter.next(), stmt3 = iter.next();
-//
-//			assertEquals(stmt1, vf.createStatement(
-//					vf.createIRI("http://example/s"), vf.createIRI("http://example/p"), vf.createIRI("http://example/o")));
-//			assertEquals(stmt2, vf.createStatement(vf.createIRI("http://example/a"), RDF.REIFIES, vf.createTriple(
-//					vf.createIRI("http://example/s1"), vf.createIRI("http://example/p1"), vf.createIRI("http://example/o1"))));
-//			assertEquals(stmt3, vf.createStatement(vf.createIRI("http://example/r"), RDF.REIFIES,
-//					vf.createTriple(vf.createIRI("http://example/23"), RDF.REIFIES,
-//							vf.createTriple(vf.createIRI("http://example/s3"), vf.createIRI("http://example/p3"), vf.createIRI("http://example/o3")))));
-//		} catch (RDFParseException e) {
-//			fail("parse error on correct data: " + e.getMessage());
-//		}
-//	}
-//
-//	/*
-//	 * https://w3c.github.io/rdf-tests/rdf/rdf12/rdf-turtle/syntax/nt-ttl12-nested-1.ttl
-//	 */
-//	@Test
-//	public void testNestedTripleTerms() throws IOException {
-//		String data = "<http://example/s> <http://example/p> <http://example/o> .\n" +
-//				"<http://example/a> <http://www.w3.org/1999/02/22-rdf-syntax-ns#reifies> <<( <http://example/s1> <http://example/p1> <http://example/o1> )>> .\n" +
-//				"<http://example/r> <http://www.w3.org/1999/02/22-rdf-syntax-ns#reifies> <<( <http://example/23> <http://www.w3.org/1999/02/22-rdf-syntax-ns#reifies> <<( <http://example/s3> <http://example/p3> <http://example/o3> )>> )>> .";
-//
-//		try {
-//			parser.parse(new StringReader(data));
-//
-//			assertThat(errorCollector.getErrors()).isEmpty();
-//
-//			Collection<Statement> stmts = statementCollector.getStatements();
-//
-//			assertThat(stmts).hasSize(3);
-//
-//			Iterator<Statement> iter = stmts.iterator();
-//			Statement stmt1 = iter.next(), stmt2 = iter.next(), stmt3 = iter.next();
-//
-//			assertEquals(stmt1, vf.createStatement(
-//					vf.createIRI("http://example/s"), vf.createIRI("http://example/p"), vf.createIRI("http://example/o")));
-//			assertEquals(stmt2, vf.createStatement(vf.createIRI("http://example/a"), RDF.REIFIES, vf.createTriple(
-//					vf.createIRI("http://example/s1"), vf.createIRI("http://example/p1"), vf.createIRI("http://example/o1"))));
-//			assertEquals(stmt3, vf.createStatement(vf.createIRI("http://example/r"), RDF.REIFIES,
-//					vf.createTriple(vf.createIRI("http://example/23"), RDF.REIFIES,
-//							vf.createTriple(vf.createIRI("http://example/s3"), vf.createIRI("http://example/p3"), vf.createIRI("http://example/o3")))));
-//		} catch (RDFParseException e) {
-//			fail("parse error on correct data: " + e.getMessage());
-//		}
-//	}
-//
-//	/*
-//	 * https://w3c.github.io/rdf-tests/rdf/rdf12/rdf-turtle/syntax/nt-ttl12-nested-1.ttl
-//	 */
-//	@Test
-//	public void testNestedTripleTerms() throws IOException {
-//		String data = "<http://example/s> <http://example/p> <http://example/o> .\n" +
-//				"<http://example/a> <http://www.w3.org/1999/02/22-rdf-syntax-ns#reifies> <<( <http://example/s1> <http://example/p1> <http://example/o1> )>> .\n" +
-//				"<http://example/r> <http://www.w3.org/1999/02/22-rdf-syntax-ns#reifies> <<( <http://example/23> <http://www.w3.org/1999/02/22-rdf-syntax-ns#reifies> <<( <http://example/s3> <http://example/p3> <http://example/o3> )>> )>> .";
-//
-//		try {
-//			parser.parse(new StringReader(data));
-//
-//			assertThat(errorCollector.getErrors()).isEmpty();
-//
-//			Collection<Statement> stmts = statementCollector.getStatements();
-//
-//			assertThat(stmts).hasSize(3);
-//
-//			Iterator<Statement> iter = stmts.iterator();
-//			Statement stmt1 = iter.next(), stmt2 = iter.next(), stmt3 = iter.next();
-//
-//			assertEquals(stmt1, vf.createStatement(
-//					vf.createIRI("http://example/s"), vf.createIRI("http://example/p"), vf.createIRI("http://example/o")));
-//			assertEquals(stmt2, vf.createStatement(vf.createIRI("http://example/a"), RDF.REIFIES, vf.createTriple(
-//					vf.createIRI("http://example/s1"), vf.createIRI("http://example/p1"), vf.createIRI("http://example/o1"))));
-//			assertEquals(stmt3, vf.createStatement(vf.createIRI("http://example/r"), RDF.REIFIES,
-//					vf.createTriple(vf.createIRI("http://example/23"), RDF.REIFIES,
-//							vf.createTriple(vf.createIRI("http://example/s3"), vf.createIRI("http://example/p3"), vf.createIRI("http://example/o3")))));
-//		} catch (RDFParseException e) {
-//			fail("parse error on correct data: " + e.getMessage());
-//		}
-//	}
-//
-//	/*
-//	 * https://w3c.github.io/rdf-tests/rdf/rdf12/rdf-turtle/syntax/nt-ttl12-nested-1.ttl
-//	 */
-//	@Test
-//	public void testNestedTripleTerms() throws IOException {
-//		String data = "<http://example/s> <http://example/p> <http://example/o> .\n" +
-//				"<http://example/a> <http://www.w3.org/1999/02/22-rdf-syntax-ns#reifies> <<( <http://example/s1> <http://example/p1> <http://example/o1> )>> .\n" +
-//				"<http://example/r> <http://www.w3.org/1999/02/22-rdf-syntax-ns#reifies> <<( <http://example/23> <http://www.w3.org/1999/02/22-rdf-syntax-ns#reifies> <<( <http://example/s3> <http://example/p3> <http://example/o3> )>> )>> .";
-//
-//		try {
-//			parser.parse(new StringReader(data));
-//
-//			assertThat(errorCollector.getErrors()).isEmpty();
-//
-//			Collection<Statement> stmts = statementCollector.getStatements();
-//
-//			assertThat(stmts).hasSize(3);
-//
-//			Iterator<Statement> iter = stmts.iterator();
-//			Statement stmt1 = iter.next(), stmt2 = iter.next(), stmt3 = iter.next();
-//
-//			assertEquals(stmt1, vf.createStatement(
-//					vf.createIRI("http://example/s"), vf.createIRI("http://example/p"), vf.createIRI("http://example/o")));
-//			assertEquals(stmt2, vf.createStatement(vf.createIRI("http://example/a"), RDF.REIFIES, vf.createTriple(
-//					vf.createIRI("http://example/s1"), vf.createIRI("http://example/p1"), vf.createIRI("http://example/o1"))));
-//			assertEquals(stmt3, vf.createStatement(vf.createIRI("http://example/r"), RDF.REIFIES,
-//					vf.createTriple(vf.createIRI("http://example/23"), RDF.REIFIES,
-//							vf.createTriple(vf.createIRI("http://example/s3"), vf.createIRI("http://example/p3"), vf.createIRI("http://example/o3")))));
-//		} catch (RDFParseException e) {
-//			fail("parse error on correct data: " + e.getMessage());
-//		}
-//	}
-//
-//	/*
-//	 * https://w3c.github.io/rdf-tests/rdf/rdf12/rdf-turtle/syntax/nt-ttl12-nested-1.ttl
-//	 */
-//	@Test
-//	public void testNestedTripleTerms() throws IOException {
-//		String data = "<http://example/s> <http://example/p> <http://example/o> .\n" +
-//				"<http://example/a> <http://www.w3.org/1999/02/22-rdf-syntax-ns#reifies> <<( <http://example/s1> <http://example/p1> <http://example/o1> )>> .\n" +
-//				"<http://example/r> <http://www.w3.org/1999/02/22-rdf-syntax-ns#reifies> <<( <http://example/23> <http://www.w3.org/1999/02/22-rdf-syntax-ns#reifies> <<( <http://example/s3> <http://example/p3> <http://example/o3> )>> )>> .";
-//
-//		try {
-//			parser.parse(new StringReader(data));
-//
-//			assertThat(errorCollector.getErrors()).isEmpty();
-//
-//			Collection<Statement> stmts = statementCollector.getStatements();
-//
-//			assertThat(stmts).hasSize(3);
-//
-//			Iterator<Statement> iter = stmts.iterator();
-//			Statement stmt1 = iter.next(), stmt2 = iter.next(), stmt3 = iter.next();
-//
-//			assertEquals(stmt1, vf.createStatement(
-//					vf.createIRI("http://example/s"), vf.createIRI("http://example/p"), vf.createIRI("http://example/o")));
-//			assertEquals(stmt2, vf.createStatement(vf.createIRI("http://example/a"), RDF.REIFIES, vf.createTriple(
-//					vf.createIRI("http://example/s1"), vf.createIRI("http://example/p1"), vf.createIRI("http://example/o1"))));
-//			assertEquals(stmt3, vf.createStatement(vf.createIRI("http://example/r"), RDF.REIFIES,
-//					vf.createTriple(vf.createIRI("http://example/23"), RDF.REIFIES,
-//							vf.createTriple(vf.createIRI("http://example/s3"), vf.createIRI("http://example/p3"), vf.createIRI("http://example/o3")))));
-//		} catch (RDFParseException e) {
-//			fail("parse error on correct data: " + e.getMessage());
-//		}
-//	}
+	@Test
+	public void testReifierInReifiedTriple() throws IOException {
+		String data = "PREFIX : <http://example/>\n" +
+				":x :p <<:s :p :o ~ _:b1 >> .";
+		try {
+			Model model = new LinkedHashModel();
+			statementCollector = new StatementCollector(model);
+			parser.setRDFHandler(statementCollector);
+			parser.set(BasicParserSettings.PRESERVE_BNODE_IDS, true);
+			parser.parse(new StringReader(data));
+
+			assertThat(errorCollector.getErrors()).isEmpty();
+
+			assertThat(model).hasSize(2);
+
+			assertTrue(model.contains(vf.createBNode("b1"), RDF.REIFIES, simpleSPOTriple));
+			assertTrue(model.contains(vf.createIRI("http://example/x"), vf.createIRI("http://example/p"), vf.createBNode("b1")));
+		} catch (RDFParseException e) {
+			fail("parse error on correct data: " + e.getMessage());
+		}
+	}
+
+	@Test
+	public void testReifierWithoutNode() throws IOException {
+		String data = "PREFIX : <http://example/>\n" +
+				":s :p :o ~ .";
+		try {
+			Model model = new LinkedHashModel();
+			statementCollector = new StatementCollector(model);
+			parser.setRDFHandler(statementCollector);
+			parser.set(BasicParserSettings.PRESERVE_BNODE_IDS, true);
+			parser.parse(new StringReader(data));
+
+			assertThat(errorCollector.getErrors()).isEmpty();
+
+			assertThat(model).hasSize(2);
+
+			assertTrue(model.contains(null, RDF.REIFIES, simpleSPOTriple));
+			assertTrue(model.contains(simpleSPOStatement));
+		} catch (RDFParseException e) {
+			fail("parse error on correct data: " + e.getMessage());
+		}
+	}
+
+	@Test
+	public void testReifierAnnotation() throws IOException {
+		String data = "PREFIX : <http://example/>\n" +
+				":s :p :o ~ _:b1 .";
+		try {
+			Model model = new LinkedHashModel();
+			statementCollector = new StatementCollector(model);
+			parser.setRDFHandler(statementCollector);
+			parser.set(BasicParserSettings.PRESERVE_BNODE_IDS, true);
+			parser.parse(new StringReader(data));
+
+			assertThat(errorCollector.getErrors()).isEmpty();
+
+			assertThat(model).hasSize(2);
+
+			assertTrue(model.contains(vf.createBNode("b1"), RDF.REIFIES, simpleSPOTriple));
+			assertTrue(model.contains(simpleSPOStatement));
+		} catch (RDFParseException e) {
+			fail("parse error on correct data: " + e.getMessage());
+		}
+	}
+
+	@Test
+	public void testReifierAnnotationBlock() throws IOException {
+		String data = "PREFIX : <http://example/>\n" +
+				":s :p :o ~ _:b1 {| :p2 :o2 |} .";
+		try {
+			Model model = new LinkedHashModel();
+			statementCollector = new StatementCollector(model);
+			parser.setRDFHandler(statementCollector);
+			parser.set(BasicParserSettings.PRESERVE_BNODE_IDS, true);
+			parser.parse(new StringReader(data));
+
+			assertThat(errorCollector.getErrors()).isEmpty();
+
+			assertThat(model).hasSize(3);
+
+			assertTrue(model.contains(vf.createBNode("b1"), RDF.REIFIES, simpleSPOTriple));
+			assertTrue(model.contains(simpleSPOStatement));
+			assertTrue(model.contains(vf.createBNode("b1"), vf.createIRI("http://example/p2"), vf.createIRI("http://example/o2")));
+		} catch (RDFParseException e) {
+			fail("parse error on correct data: " + e.getMessage());
+		}
+	}
+
+	@Test
+	public void testAnnotationBlock() throws IOException {
+		String data = "PREFIX : <http://example/>\n" +
+				":s :p :o {| :p2 :o2 ; :p3 :o3 |} .";
+		try {
+			Model model = new LinkedHashModel();
+			statementCollector = new StatementCollector(model);
+			parser.setRDFHandler(statementCollector);
+			parser.set(BasicParserSettings.PRESERVE_BNODE_IDS, true);
+			parser.parse(new StringReader(data));
+
+			assertThat(errorCollector.getErrors()).isEmpty();
+
+			assertThat(model).hasSize(4);
+
+			assertTrue(model.contains(simpleSPOStatement));
+
+			Model reifyingTriples = model.filter(null, RDF.REIFIES, simpleSPOTriple);
+			assertThat(reifyingTriples).hasSize(1);
+			Resource reifier = Models.subject(reifyingTriples).get();
+			assertInstanceOf(BNode.class, reifier);
+
+			assertTrue(model.contains(reifier, vf.createIRI("http://example/p2"), vf.createIRI("http://example/o2")));
+			assertTrue(model.contains(reifier, vf.createIRI("http://example/p3"), vf.createIRI("http://example/o3")));
+		} catch (RDFParseException e) {
+			fail("parse error on correct data: " + e.getMessage());
+		}
+	}
 }

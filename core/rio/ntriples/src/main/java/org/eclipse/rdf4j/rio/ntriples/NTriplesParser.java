@@ -281,6 +281,7 @@ public class NTriplesParser extends AbstractRDFParser {
 	private Literal parseLiteral() {
 		String label = parseLabel();
 		incrementIndexOrThrowEOF();
+		skipWhitespace(true);
 		if (currentIndex < lineChars.length - 1 && lineChars[currentIndex] == '^') {
 			return parseLiteralWithDatatype(label);
 		} else if (lineChars[currentIndex] == '@') {
@@ -340,6 +341,7 @@ public class NTriplesParser extends AbstractRDFParser {
 					NTriplesParserSettings.FAIL_ON_INVALID_LINES);
 		}
 		currentIndex += 2;
+		skipWhitespace(true);
 		if (currentIndex >= lineChars.length || lineChars[currentIndex] != '<') {
 			reportError("Expected '<', found: " + new String(Character.toChars(lineChars[currentIndex])),
 					NTriplesParserSettings.FAIL_ON_INVALID_LINES);

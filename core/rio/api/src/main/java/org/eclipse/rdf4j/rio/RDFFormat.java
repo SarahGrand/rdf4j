@@ -97,7 +97,7 @@ public class RDFFormat extends FileFormat {
 	public static final RDFFormat NTRIPLES = new RDFFormat("N-Triples",
 			Arrays.asList("application/n-triples", "text/plain"), StandardCharsets.UTF_8, List.of("nt"),
 			SimpleValueFactory.getInstance().createIRI("http://www.w3.org/ns/formats/N-Triples"), NO_NAMESPACES,
-			NO_CONTEXTS, NO_RDF_STAR);
+			NO_CONTEXTS, SUPPORTS_RDF_STAR);
 
 	/**
 	 * The <a href="http://www.w3.org/TR/turtle/">Turtle</a> file format.
@@ -111,7 +111,7 @@ public class RDFFormat extends FileFormat {
 	public static final RDFFormat TURTLE = new RDFFormat("Turtle", Arrays.asList("text/turtle", "application/x-turtle"),
 			StandardCharsets.UTF_8, List.of("ttl"),
 			SimpleValueFactory.getInstance().createIRI("http://www.w3.org/ns/formats/Turtle"), SUPPORTS_NAMESPACES,
-			NO_CONTEXTS, NO_RDF_STAR);
+			NO_CONTEXTS, SUPPORTS_RDF_STAR);
 
 	/**
 	 * The Turtle-star file format, a Turtle-based RDF serialization format that supports RDF-star triples.
@@ -169,7 +169,7 @@ public class RDFFormat extends FileFormat {
 	public static final RDFFormat TRIG = new RDFFormat("TriG", Arrays.asList("application/trig", "application/x-trig"),
 			StandardCharsets.UTF_8, List.of("trig"),
 			SimpleValueFactory.getInstance().createIRI("http://www.w3.org/ns/formats/TriG"), SUPPORTS_NAMESPACES,
-			SUPPORTS_CONTEXTS, NO_RDF_STAR);
+			SUPPORTS_CONTEXTS, SUPPORTS_RDF_STAR);
 
 	/**
 	 * The TriG-star file format, a TriG-based RDF serialization format that supports RDF-star triples. This builds upon
@@ -211,7 +211,7 @@ public class RDFFormat extends FileFormat {
 	public static final RDFFormat NQUADS = new RDFFormat("N-Quads",
 			Arrays.asList("application/n-quads", "text/x-nquads", "text/nquads"), StandardCharsets.UTF_8,
 			List.of("nq"), SimpleValueFactory.getInstance().createIRI("http://www.w3.org/ns/formats/N-Quads"),
-			NO_NAMESPACES, SUPPORTS_CONTEXTS, NO_RDF_STAR);
+			NO_NAMESPACES, SUPPORTS_CONTEXTS, SUPPORTS_RDF_STAR);
 
 	/**
 	 * The <a href="http://www.w3.org/TR/json-ld/">JSON-LD</a> file format, an RDF serialization format that supports

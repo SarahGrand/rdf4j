@@ -20,7 +20,7 @@ public class TurtleParserTest {
 	public static Test suite() throws Exception {
 		final TestSuite suite = new TestSuite();
 		suite.addTest(Turtle11ParserTest.suite());
-//		suite.addTest(Turtle12ParserTest.suite());
+		suite.addTest(Turtle12ParserTest.suite());
 		return suite;
 	}
 

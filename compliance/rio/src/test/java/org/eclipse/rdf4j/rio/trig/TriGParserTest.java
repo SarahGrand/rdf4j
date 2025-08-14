@@ -20,7 +20,7 @@ public class TriGParserTest {
 	public static Test suite() throws Exception {
 		final TestSuite suite = new TestSuite();
 		suite.addTest(TriG11ParserTest.suite());
-//		suite.addTest(TriG12ParserTest.suite());
+		suite.addTest(TriG12ParserTest.suite());
 		return suite;
 	}
 
